@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "title": "GoldenTime Router 데모",
+      "description": "병원 찾기 기능을 확인할 수 있는 웹페이지",
+      "type": "웹페이지",
+      "url": "https://irb2026.pages.dev/"
+    }
+  ]
+}
