@@ -70,7 +70,17 @@
     },
     {
       "image": "/assets/bigkachu-kim-taehyun/slide-17.webp",
-      "thumbnail": "/assets/bigkachu-kim-taehyun/slide-17-thumb.webp"
+      "thumbnail": "/assets/bigkachu-kim-taehyun/slide-17-thumb.webp",
+      "links": [
+        {
+          "url": "https://goldentime-irb-resources.vercel.app/",
+          "label": "GoldenTime Router 자료 페이지 열기 (새 탭)",
+          "x": 0.6968172803337191,
+          "y": 0.508052625154194,
+          "width": 0.22995062934027777,
+          "height": 0.06195965147854989
+        }
+      ]
     },
     {
       "image": "/assets/bigkachu-kim-taehyun/slide-18.webp",
@@ -90,7 +100,17 @@
     },
     {
       "image": "/assets/bigkachu-kim-taehyun/slide-22.webp",
-      "thumbnail": "/assets/bigkachu-kim-taehyun/slide-22-thumb.webp"
+      "thumbnail": "/assets/bigkachu-kim-taehyun/slide-22-thumb.webp",
+      "links": [
+        {
+          "url": "https://irb2026.pages.dev/",
+          "label": "GoldenTime Router 데모 열기 (새 탭)",
+          "x": 0.22298173315731096,
+          "y": 0.37174559476082786,
+          "width": 0.5504849280840085,
+          "height": 0.42131537721868145
+        }
+      ]
     },
     {
       "image": "/assets/bigkachu-kim-taehyun/slide-23.webp",
