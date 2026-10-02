@@ -1,6 +1,6 @@
 "use strict";
 
-// The HTML retains the first real link even when JavaScript is unavailable.
+// The HTML retains the resource links even when JavaScript is unavailable.
 // New resources are maintained in links.json; no page layout changes are needed.
 async function loadResources() {
   const list = document.getElementById("resource-list");
@@ -15,8 +15,11 @@ async function loadResources() {
       if (!resource || typeof resource.title !== "string" || !resource.title.trim()) {
         throw new Error("Invalid title");
       }
-      const url = new URL(resource.url);
-      if (url.protocol !== "https:") throw new Error("Only HTTPS resources are supported");
+      if (typeof resource.url !== "string") throw new Error("Invalid resource URL");
+      const localPath = resource.url.startsWith("/") && !resource.url.startsWith("//");
+      const url = new URL(resource.url, window.location.origin);
+      const localResource = localPath && url.origin === window.location.origin;
+      if (!localResource && url.protocol !== "https:") throw new Error("Only local paths and HTTPS resources are supported");
 
       const row = document.createElement("li");
       row.className = "resource";
@@ -41,7 +44,7 @@ async function loadResources() {
       }
       const domain = document.createElement("span");
       domain.className = "resource-domain";
-      domain.textContent = url.hostname;
+      domain.textContent = localResource ? "GoldenTime Router · 발표자료" : url.hostname;
       content.append(domain);
 
       const link = document.createElement("a");
@@ -49,8 +52,9 @@ async function loadResources() {
       link.href = url.href;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.setAttribute("aria-label", `${resource.title} 자료 열기 (새 탭)`);
-      link.textContent = "자료 열기 ";
+      const action = resource.action || "자료 열기";
+      link.setAttribute("aria-label", `${resource.title} ${action} (새 탭)`);
+      link.textContent = `${action} `;
       const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       icon.setAttribute("viewBox", "0 0 20 20");
       icon.setAttribute("fill", "none");

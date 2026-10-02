@@ -5,6 +5,13 @@
       "description": "병원 찾기 기능을 확인할 수 있는 웹페이지",
       "type": "웹페이지",
       "url": "https://irb2026.pages.dev/"
+    },
+    {
+      "title": "빅카츄 · 김태현 발표자료",
+      "description": "총 34장 · 한 장씩 넘겨 보는 발표자료와 원본 PDF",
+      "type": "PDF · 슬라이드",
+      "url": "/slideshow.html",
+      "action": "슬라이드 보기"
     }
   ]
 }

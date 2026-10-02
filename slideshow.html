@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" class="presentation">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>빅카츄 · 김태현 발표자료 | GoldenTime Router</title>
+    <meta name="description" content="빅카츄 김태현 발표자료 34장을 슬라이드 쇼로 확인하고 원본 PDF를 내려받으세요.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/slideshow.css">
+    <script src="/slideshow.js" defer></script>
+  </head>
+  <body>
+    <main class="viewer" aria-label="발표자료 슬라이드 쇼">
+      <header class="viewer-header">
+        <a class="back-link" href="/" aria-label="자료 목록으로 돌아가기">← <span>자료 목록</span></a>
+        <div class="deck-heading"><p>GOLDENTIME ROUTER</p><h1>빅카츄 · 김태현 발표자료</h1></div>
+        <a class="download-link" href="/assets/bigkachu-kim-taehyun/bigkachu-kim-taehyun.pdf" download="빅카츄_김태현.pdf">PDF 다운로드 <span aria-hidden="true">↓</span></a>
+      </header>
+
+      <div class="slide-stage" id="slide-stage" aria-busy="true">
+        <button class="slide-surface" id="slide-surface" aria-label="다음 슬라이드 (화면 왼쪽을 누르면 이전 슬라이드)" aria-describedby="keyboard-help" disabled>
+          <img id="slide-image" src="/assets/bigkachu-kim-taehyun/slide-01.webp" width="2560" height="1442" alt="빅카츄 · 김태현 발표자료, 1 / 34" fetchpriority="high" draggable="false">
+        </button>
+        <div class="stage-notice" id="stage-notice" role="status"><p id="stage-message">발표자료를 불러오는 중입니다.</p><button id="retry" hidden>다시 불러오기</button></div>
+      </div>
+
+      <footer class="viewer-controls" aria-label="슬라이드 조작">
+        <div class="navigation">
+          <button class="icon-button" id="previous" aria-label="이전 슬라이드" title="이전 슬라이드 (←)" disabled>←</button>
+          <form id="page-form" class="page-form">
+            <label class="sr-only" for="page-number">이동할 슬라이드 번호</label>
+            <input id="page-number" type="number" inputmode="numeric" min="1" max="34" value="1" aria-label="이동할 슬라이드 번호" disabled>
+            <span aria-hidden="true">/</span><span id="page-total">34</span>
+          </form>
+          <button class="icon-button" id="next" aria-label="다음 슬라이드" title="다음 슬라이드 (→ 또는 Space)" disabled>→</button>
+        </div>
+        <div class="view-actions">
+          <button id="overview-button" title="전체 슬라이드 (G)" aria-haspopup="dialog" disabled><span aria-hidden="true">▦</span> 전체 슬라이드</button>
+          <button id="fullscreen-button" title="전체화면 (F)" aria-pressed="false"><span aria-hidden="true">⛶</span> <span id="fullscreen-label">전체화면</span></button>
+        </div>
+      </footer>
+      <p class="keyboard-help" id="keyboard-help"><span class="desktop-help">← → / Space 이동 · F 전체화면 · G 전체 슬라이드</span><span class="touch-help">좌우로 밀어 이동 · 번호를 입력해 바로 이동</span></p>
+      <p class="sr-only" id="slide-announcement" aria-live="polite" aria-atomic="true"></p>
+      <p class="toast" id="toast" role="status" hidden></p>
+      <noscript><p class="noscript-notice">슬라이드 쇼를 보려면 JavaScript를 켜 주세요. <a href="/assets/bigkachu-kim-taehyun/bigkachu-kim-taehyun.pdf">원본 PDF 열기</a></p></noscript>
+    </main>
+
+    <dialog id="overview" aria-labelledby="overview-title">
+      <div class="overview-header"><div><p>SLIDE OVERVIEW</p><h2 id="overview-title">전체 슬라이드 <span>34</span></h2></div><button id="close-overview" aria-label="전체 슬라이드 목록 닫기">닫기 <span aria-hidden="true">×</span></button></div>
+      <div class="thumbnail-grid" id="thumbnail-grid"></div>
+    </dialog>
+  </body>
+</html>
