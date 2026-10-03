@@ -12,6 +12,22 @@
       "type": "PDF · 슬라이드",
       "url": "/slideshow.html",
       "action": "슬라이드 보기"
+    },
+    {
+      "title": "GoldenTime Router UI Flow",
+      "description": "총 8개 화면 · 메인 화면에서 병원 상세 정보까지의 흐름",
+      "type": "UI 사진 · Flow",
+      "url": "/ui-flow.html",
+      "action": "Flow 보기",
+      "source": "GoldenTime Router · UI 화면"
+    },
+    {
+      "title": "GoldenTime Router 시연 영상",
+      "description": "IRB 서비스 시연 영상 · 직접 재생 및 YouTube 링크",
+      "type": "영상",
+      "url": "/video.html",
+      "action": "영상 보기",
+      "source": "GoldenTime Router · 시연 영상"
     }
   ]
 }

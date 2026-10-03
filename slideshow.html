@@ -11,14 +11,14 @@
     <script src="/slideshow.js" defer></script>
   </head>
   <body>
-    <main class="viewer" aria-label="발표자료 슬라이드 쇼" aria-describedby="keyboard-help">
+    <main class="viewer" data-manifest="/assets/bigkachu-kim-taehyun/slides.json" aria-label="발표자료 슬라이드 쇼" aria-describedby="keyboard-help">
       <h1 class="sr-only">빅카츄 · 김태현 발표자료</h1>
       <p class="sr-only" id="keyboard-help">방향키와 Space로 이동, Home과 End로 첫 장과 마지막 장, 숫자를 입력하고 Enter로 해당 장 이동, F로 전체화면. 슬라이드 안의 링크는 클릭하거나 Tab으로 선택하고 Enter로 열 수 있습니다.</p>
       <div class="slide-stage" id="slide-stage" aria-busy="true">
-        <img id="slide-image" src="/assets/bigkachu-kim-taehyun/slide-01.webp" width="2560" height="1442" alt="빅카츄 · 김태현 발표자료, 1 / 34" fetchpriority="high" draggable="false">
+        <img id="slide-image" src="/assets/bigkachu-kim-taehyun/slide-01.webp?v=1b9f3e7c7301" width="2560" height="1442" alt="빅카츄 · 김태현 발표자료, 1 / 34" fetchpriority="high" draggable="false">
         <svg id="slide-links" class="slide-links" viewBox="0 0 2560 1442" preserveAspectRatio="xMidYMid meet" role="group" aria-label="슬라이드 안의 링크"></svg>
-        <div class="stage-notice" id="stage-notice" role="status">
-          <p id="stage-message">발표자료를 불러오는 중입니다.</p>
+        <div class="stage-notice" id="stage-notice" role="status" hidden>
+          <p id="stage-message"></p>
           <div id="recovery" hidden><button id="retry">다시 불러오기</button> <a href="/assets/bigkachu-kim-taehyun/bigkachu-kim-taehyun.pdf" download="빅카츄_김태현.pdf">PDF 다운로드</a></div>
         </div>
       </div>

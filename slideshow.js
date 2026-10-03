@@ -1,7 +1,11 @@
 "use strict";
 
 const stage = document.getElementById("slide-stage");
-const slideImage = document.getElementById("slide-image");
+let slideImage = document.getElementById("slide-image");
+const viewer = document.querySelector(".viewer");
+const manifestPath = viewer.dataset.manifest;
+const hashPrefix = viewer.dataset.hashPrefix || "slide";
+const imageCache = new Map();
 const linkLayer = document.getElementById("slide-links");
 const notice = document.getElementById("stage-notice");
 const message = document.getElementById("stage-message");
@@ -22,15 +26,43 @@ function showNotice(text, canRetry = false) {
 }
 
 function pageFromHash() {
-  const match = /^#slide-(\d+)$/.exec(window.location.hash);
+  const match = new RegExp(`^#${hashPrefix}-(\\d+)$`).exec(window.location.hash);
   return match ? Number(match[1]) - 1 : 0;
 }
 
-function preload(index) {
-  if (!deck.slides[index]) return;
-  const image = new Image();
+function getImage(index, priority = "low") {
+  const cached = imageCache.get(index);
+  if (cached) {
+    if (priority === "high") cached.image.fetchPriority = "high";
+    return cached;
+  }
+  const source = new URL(deck.slides[index].image, location.origin).href;
+  const image = slideImage.src === source ? slideImage : new Image();
   image.decoding = "async";
-  image.src = deck.slides[index].image;
+  image.fetchPriority = priority;
+  image.draggable = false;
+  image.src = source;
+  const entry = { image, ready: false, promise: null };
+  imageCache.set(index, entry);
+  entry.promise = image.decode().then(() => {
+    entry.ready = true;
+    return image;
+  }).catch(error => {
+    if (imageCache.get(index) === entry) imageCache.delete(index);
+    throw error;
+  });
+  return entry;
+}
+
+function preloadAround(index) {
+  // Keep decoded images in a small moving window instead of retaining the
+  // entire presentation in memory. Failed background loads can be retried.
+  for (const cachedIndex of imageCache.keys()) {
+    if (cachedIndex < index - 1 || cachedIndex > index + 3) imageCache.delete(cachedIndex);
+  }
+  for (const nextIndex of [index + 1, index + 2, index + 3, index - 1]) {
+    if (deck.slides[nextIndex]) getImage(nextIndex).promise.catch(() => {});
+  }
 }
 
 function showLinks(slide) {
@@ -63,34 +95,38 @@ async function goTo(index) {
   current = Math.max(0, Math.min(deck.slides.length - 1, Number.isFinite(index) ? Math.trunc(index) : 0));
   const selected = current;
   const generation = ++request;
-  linkLayer.replaceChildren();
   stage.setAttribute("aria-busy", "true");
-  showNotice(`${current + 1}번 슬라이드를 불러오는 중입니다.`);
-  history.replaceState(null, "", `#slide-${current + 1}`);
+  notice.hidden = true;
+  recovery.hidden = true;
   try {
-    const image = new Image();
-    image.src = deck.slides[selected].image;
-    await image.decode();
+    const entry = getImage(selected, "high");
+    if (!entry.ready) await entry.promise;
     if (generation !== request) return;
-    slideImage.src = image.src;
-    slideImage.alt = `${deck.title}, ${selected + 1} / ${deck.slides.length}`;
+    const image = entry.image;
+    image.id = "slide-image";
+    image.width = deck.width;
+    image.height = deck.height;
+    image.alt = `${deck.title}${deck.slides[selected].title ? ` · ${deck.slides[selected].title}` : ""}, ${selected + 1} / ${deck.slides.length}`;
+    if (image !== slideImage) slideImage.replaceWith(image);
+    slideImage = image;
     showLinks(deck.slides[selected]);
-    notice.hidden = true;
     stage.setAttribute("aria-busy", "false");
-    announcement.textContent = `${deck.slides.length}장 중 ${selected + 1}번째 슬라이드`;
-    preload(selected + 1);
-    preload(selected - 1);
+    history.replaceState(null, "", `#${hashPrefix}-${selected + 1}`);
+    announcement.textContent = `${deck.slides.length}개 중 ${selected + 1}번째 화면`;
+    preloadAround(selected);
   } catch {
     if (generation !== request) return;
     stage.setAttribute("aria-busy", "false");
-    showNotice("슬라이드를 불러오지 못했습니다. 다시 시도하거나 PDF를 내려받아 주세요.", true);
+    linkLayer.replaceChildren();
+    showNotice("화면을 불러오지 못했습니다. 다시 시도해 주세요.", true);
   }
 }
 
 async function loadDeck() {
-  showNotice("발표자료를 불러오는 중입니다.");
+  notice.hidden = true;
+  stage.setAttribute("aria-busy", "true");
   try {
-    const response = await fetch("/assets/bigkachu-kim-taehyun/slides.json");
+    const response = await fetch(manifestPath, { cache: "no-cache" });
     if (!response.ok) throw new Error("Manifest unavailable");
     const data = await response.json();
     if (!Array.isArray(data.slides) || !data.slides.length || !Number.isFinite(data.width) || data.width <= 0 || !Number.isFinite(data.height) || data.height <= 0) throw new Error("Invalid deck");
@@ -104,7 +140,7 @@ async function loadDeck() {
     await goTo(pageFromHash());
   } catch {
     stage.setAttribute("aria-busy", "false");
-    showNotice("발표자료를 불러오지 못했습니다. 다시 시도하거나 PDF를 내려받아 주세요.", true);
+    showNotice("자료를 불러오지 못했습니다. 다시 시도해 주세요.", true);
   }
 }
 
@@ -132,7 +168,8 @@ function clearDigits() {
 
 document.getElementById("retry").addEventListener("click", () => deck ? goTo(current) : loadDeck());
 document.addEventListener("keydown", event => {
-  if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input, textarea, select, [contenteditable]")) return;
+  const target = event.target instanceof Element ? event.target : null;
+  if (event.altKey || event.ctrlKey || event.metaKey || target?.closest("input, textarea, select, [contenteditable]")) return;
   const key = event.key.toLowerCase();
   if (key === "f") {
     event.preventDefault();
@@ -160,8 +197,8 @@ document.addEventListener("keydown", event => {
     return;
   }
   // Enter still opens focused PDF hyperlinks; presentation keys never click them.
-  if (key === "enter" && event.target.closest("a, button")) return;
-  if (key === " " && event.target.closest("button")) return;
+  if (key === "enter" && target?.closest("a, button")) return;
+  if (key === " " && target?.closest("button")) return;
   if (["arrowright", "arrowdown", "pagedown", " ", "enter"].includes(key)) {
     event.preventDefault();
     clearDigits();

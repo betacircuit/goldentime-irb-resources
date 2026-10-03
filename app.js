@@ -15,11 +15,16 @@ async function loadResources() {
       if (!resource || typeof resource.title !== "string" || !resource.title.trim()) {
         throw new Error("Invalid title");
       }
-      if (typeof resource.url !== "string") throw new Error("Invalid resource URL");
-      const localPath = resource.url.startsWith("/") && !resource.url.startsWith("//");
-      const url = new URL(resource.url, window.location.origin);
-      const localResource = localPath && url.origin === window.location.origin;
-      if (!localResource && url.protocol !== "https:") throw new Error("Only local paths and HTTPS resources are supported");
+      const pending = resource.status === "pending" && !resource.url;
+      let url;
+      let localResource = false;
+      if (!pending) {
+        if (typeof resource.url !== "string") throw new Error("Invalid resource URL");
+        const localPath = resource.url.startsWith("/") && !resource.url.startsWith("//");
+        url = new URL(resource.url, window.location.origin);
+        localResource = localPath && url.origin === window.location.origin;
+        if (!localResource && url.protocol !== "https:") throw new Error("Only local paths and HTTPS resources are supported");
+      }
 
       const row = document.createElement("li");
       row.className = "resource";
@@ -44,8 +49,16 @@ async function loadResources() {
       }
       const domain = document.createElement("span");
       domain.className = "resource-domain";
-      domain.textContent = localResource ? "GoldenTime Router · 발표자료" : url.hostname;
+      domain.textContent = resource.source || (pending ? "영상 링크 준비 중" : localResource ? "GoldenTime Router · 발표자료" : url.hostname);
       content.append(domain);
+
+      if (pending) {
+        const status = document.createElement("span");
+        status.className = "resource-status";
+        status.textContent = "업로드 예정";
+        row.append(number, content, status);
+        return row;
+      }
 
       const link = document.createElement("a");
       link.className = "resource-link";

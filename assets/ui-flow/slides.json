@@ -1,0 +1,39 @@
+{
+  "title": "GoldenTime Router UI Flow",
+  "width": 2732,
+  "height": 2048,
+  "slides": [
+    {
+      "title": "메인 화면 · 병원 추천과 지도",
+      "image": "/assets/ui-flow/step-01.webp?v=c525101b7b04"
+    },
+    {
+      "title": "환자 정보 · Vitals",
+      "image": "/assets/ui-flow/step-02.webp?v=db7f5b020775"
+    },
+    {
+      "title": "주호소 · CC",
+      "image": "/assets/ui-flow/step-03.webp?v=bfe5c41b16ae"
+    },
+    {
+      "title": "과거 병력 · PMH",
+      "image": "/assets/ui-flow/step-04.webp?v=87dcb69bcac2"
+    },
+    {
+      "title": "관찰 소견 · Notes",
+      "image": "/assets/ui-flow/step-05.webp?v=c468bdf372c6"
+    },
+    {
+      "title": "병원에 연락하기",
+      "image": "/assets/ui-flow/step-06.webp?v=d1798a8b0e4a"
+    },
+    {
+      "title": "병원 상세 정보 · 시간 마스크",
+      "image": "/assets/ui-flow/step-07.webp?v=5fb52761bef2"
+    },
+    {
+      "title": "자원 가용성과 확인 항목",
+      "image": "/assets/ui-flow/step-08.webp?v=601382f016f2"
+    }
+  ]
+}

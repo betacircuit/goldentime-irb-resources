@@ -43,9 +43,18 @@ h3 { margin: 0; color: var(--navy); font-size: 1.25rem; font-weight: 650; line-h
 .resource-link { display: inline-flex; align-items: center; justify-content: center; gap: 12px; border: 1px solid #d7e0e7; border-radius: 6px; background: #fff; color: var(--navy); padding: 12px 17px; font-size: .875rem; font-weight: 600; line-height: 1.5; text-decoration: none; transition: background-color .15s, border-color .15s; white-space: nowrap; }
 .resource-link:hover { background: var(--surface); border-color: #aebfcd; }
 .resource-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+.resource-status { justify-self: center; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--muted); padding: 12px 17px; font-size: .875rem; line-height: 1.5; white-space: nowrap; }
 .load-notice { font-size: .875rem; color: var(--muted); line-height: 1.7; }
 .site-footer { border-top: 1px solid var(--line); padding: 25px 0 30px; display: flex; justify-content: space-between; gap: 16px; color: #71808b; font-size: .8125rem; line-height: 1.6; }
 .footer-brand { font-weight: 600; color: var(--navy); }
+.video-shell { max-width: 1280px; }
+.video-back { font-size: .875rem; color: var(--navy); text-decoration: none; }
+.video-main { padding: 48px 0 60px; }
+.video-heading { margin-bottom: 28px; }
+.video-heading .eyebrow { margin-bottom: 14px; }
+.demo-video { display: block; width: 100%; max-height: 70svh; background: #07131e; border-radius: 10px; }
+.video-fallback { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 22px 0; }
+.video-fallback p { color: var(--muted); font-size: .875rem; line-height: 1.7; margin: 0; }
 @media (max-width: 640px) {
   .page-shell { padding: 0 24px; }
   .site-header { min-height: 99px; }
@@ -55,7 +64,7 @@ h3 { margin: 0; color: var(--navy); font-size: 1.25rem; font-weight: 650; line-h
   .intro-description { font-size: .9375rem; }
   .section-heading { align-items: start; flex-direction: column; gap: 8px; }
   .resource { grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding: 28px 0; }
-  .resource-link { grid-column: 2; justify-self: start; margin-top: 4px; }
+  .resource-link, .resource-status { grid-column: 2; justify-self: start; margin-top: 4px; }
   main { padding-bottom: 76px; }
   .site-footer { flex-direction: column; gap: 6px; }
 }
