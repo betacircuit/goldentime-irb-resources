@@ -11,7 +11,7 @@ async function loadResources() {
     const data = await response.json();
     if (!Array.isArray(data.resources)) throw new Error("Invalid resources");
 
-    const entries = data.resources.map((resource, index) => {
+    const entries = data.resources.map(resource => {
       if (!resource || typeof resource.title !== "string" || !resource.title.trim()) {
         throw new Error("Invalid title");
       }
@@ -28,46 +28,21 @@ async function loadResources() {
 
       const row = document.createElement("li");
       row.className = "resource";
-      const number = document.createElement("span");
-      number.className = "resource-number";
-      number.setAttribute("aria-hidden", "true");
-      number.textContent = String(index + 1).padStart(2, "0");
-
-      const content = document.createElement("div");
-      content.className = "resource-content";
-      const type = document.createElement("p");
-      type.className = "resource-type";
-      type.textContent = resource.type || "자료";
       const heading = document.createElement("h3");
-      heading.textContent = resource.title;
-      content.append(type, heading);
-      if (resource.description) {
-        const description = document.createElement("p");
-        description.className = "resource-description";
-        description.textContent = resource.description;
-        content.append(description);
-      }
-      const domain = document.createElement("span");
-      domain.className = "resource-domain";
-      domain.textContent = resource.source || (pending ? "영상 링크 준비 중" : localResource ? "GoldenTime Router · 발표자료" : url.hostname);
-      content.append(domain);
-
       if (pending) {
-        const status = document.createElement("span");
-        status.className = "resource-status";
-        status.textContent = "업로드 예정";
-        row.append(number, content, status);
+        heading.textContent = resource.title;
+        heading.setAttribute("aria-label", `${resource.title} (업로드 예정)`);
+        row.append(heading);
         return row;
       }
 
       const link = document.createElement("a");
-      link.className = "resource-link";
+      link.className = "resource-title";
       link.href = url.href;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      const action = resource.action || "자료 열기";
-      link.setAttribute("aria-label", `${resource.title} ${action} (새 탭)`);
-      link.textContent = `${action} `;
+      link.setAttribute("aria-label", `${resource.title} (새 탭)`);
+      link.textContent = resource.title;
       const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       icon.setAttribute("viewBox", "0 0 20 20");
       icon.setAttribute("fill", "none");
@@ -80,7 +55,8 @@ async function loadResources() {
       path.setAttribute("stroke-linejoin", "round");
       icon.append(path);
       link.append(icon);
-      row.append(number, content, link);
+      heading.append(link);
+      row.append(heading);
       return row;
     });
 

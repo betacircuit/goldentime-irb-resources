@@ -11,12 +11,15 @@
     <script src="/slideshow.js" defer></script>
   </head>
   <body>
-    <main class="viewer" data-manifest="/assets/ui-flow/slides.json" data-hash-prefix="step" aria-label="GoldenTime Router UI Flow" aria-describedby="keyboard-help">
+    <a class="viewer-back" href="/" aria-label="자료 목록으로 돌아가기" title="자료 목록으로 돌아가기">⬅️</a>
+    <main class="viewer flow-viewer" data-manifest="/assets/ui-flow/slides.json" data-hash-prefix="step" aria-label="GoldenTime Router UI Flow" aria-describedby="keyboard-help">
       <h1 class="sr-only">GoldenTime Router UI Flow</h1>
       <p class="sr-only" id="keyboard-help">방향키와 Space로 이동, Home과 End로 첫 화면과 마지막 화면, 숫자를 입력하고 Enter로 해당 화면 이동, F로 전체화면.</p>
       <div class="slide-stage" id="slide-stage" aria-busy="true">
-        <img id="slide-image" src="/assets/ui-flow/step-01.webp?v=c525101b7b04" width="2732" height="2048" alt="GoldenTime Router UI Flow · 메인 화면, 1 / 8" fetchpriority="high" draggable="false">
-        <svg id="slide-links" class="slide-links" viewBox="0 0 2732 2048" preserveAspectRatio="xMidYMid meet" role="group" aria-label="화면 안의 링크"></svg>
+        <div class="flow-crop">
+          <img id="slide-image" src="/assets/ui-flow/step-01.webp?v=c525101b7b04" width="2732" height="2048" alt="GoldenTime Router UI Flow · 메인 화면, 1 / 8" fetchpriority="high" draggable="false">
+          <svg id="slide-links" class="slide-links" viewBox="0 0 2732 2048" preserveAspectRatio="xMidYMid meet" role="group" aria-label="화면 안의 링크"></svg>
+        </div>
         <div class="stage-notice" id="stage-notice" role="status" hidden>
           <p id="stage-message"></p>
           <div id="recovery" hidden><button id="retry">다시 불러오기</button> <a href="/">자료 목록으로 돌아가기</a></div>
